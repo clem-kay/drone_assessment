@@ -16,13 +16,13 @@ class Drone(models.Model):
         ('RETURNING','RETURNING'),]
     serial_number = models.CharField(max_length=100)
     drone_model = models.CharField(
-        max_length=10,
+        max_length=13,
         choices=DRONE_MODEL,
         )
-    weight_limit = models.CharField()
-    batter_capacity = models.CharField()
+    weight_limit = models.IntegerField()
+    battery_capacity = models.IntegerField()
     state = models.CharField(
-        max_length=10,
+        max_length=13,
         choices=DRONE_STATE,
         default='IDLE',
         )
