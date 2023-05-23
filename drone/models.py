@@ -14,12 +14,12 @@ class Drone(models.Model):
         ('DELIVERING', 'DELIVERING'),
         ('DELIVERED', 'DELIVERED'),
         ('RETURNING','RETURNING'),]
-    serial_number = models.CharField(max_length=100)
+    serial_number = models.CharField(max_length=100,primary_key=True)
     drone_model = models.CharField(
         max_length=13,
         choices=DRONE_MODEL,
         )
-    weight_limit = models.IntegerField()
+    weight_limit = models.DecimalField(decimal_places=1,max_digits=4)
     battery_capacity = models.IntegerField()
     state = models.CharField(
         max_length=13,
