@@ -33,3 +33,8 @@ class Drone(models.Model):
     def __str__(self):
         return f"{self.drone_model} {self.serial_number}"
 
+
+class AuditLog(models.Model):
+    drone = models.ForeignKey(Drone,related_name='drone', on_delete=models.CASCADE)
+    battery_capacity = models.IntegerField()
+    created_at = models.DateTimeField(auto_now=True)
