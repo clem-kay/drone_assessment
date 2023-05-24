@@ -3,3 +3,5 @@ db.sqlite3
 .vscode
 drone/__pycache__
 drone_assessment/__pycache__
+drone/migrations/__pycache__
+medication/__pycache__

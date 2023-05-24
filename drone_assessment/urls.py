@@ -16,6 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from drone.views import drone_list,drone_details,battery_level,register_drone,available_drone
+from medication.views import get_meds, load_med,get_med
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -23,5 +24,8 @@ urlpatterns = [
     path('register/',register_drone),
     path('available/',available_drone),
     path('drone_details/',drone_details),
-    path('drone_battery/',battery_level)
+    path('drone_battery/',battery_level),
+    path('get_meds/',get_meds),
+    path('load/',load_med),
+    path('get_med/',get_med)
 ]

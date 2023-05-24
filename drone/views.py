@@ -1,6 +1,4 @@
 from django.shortcuts import render
-
-# Create your views here.
 from .models import Drone
 from .serializers import DroneSerializer
 from rest_framework.decorators import api_view
@@ -54,7 +52,7 @@ def battery_level(request):
         drone = Drone.objects.get(serial_number=request.data['serial_number'],)
         ser = DroneSerializer(drone)
         battery_level = ser.data['battery_capacity']
-        return Response({'battery_level':f'{battery_level}%'})
+        return Response({'battery_level':f'{battery_level}%'},status=status.HTTP_200_OK)
     except Drone.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
     

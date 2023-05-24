@@ -26,6 +26,10 @@ class Drone(models.Model):
         choices=DRONE_STATE,
         default='IDLE',
         )
+    
+    def get_weight(self):
+        return self.weight_limit
 
     def __str__(self):
         return f"{self.drone_model} {self.serial_number}"
+
