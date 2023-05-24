@@ -35,6 +35,6 @@ class Drone(models.Model):
 
 
 class AuditLog(models.Model):
-    drone = models.ForeignKey(Drone,related_name='drone', on_delete=models.CASCADE)
+    drone = models.ForeignKey(Drone,related_name='drone_details', on_delete=models.CASCADE)
     battery_capacity = models.IntegerField()
     created_at = models.DateTimeField(auto_now=True)
