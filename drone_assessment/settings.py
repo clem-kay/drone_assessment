@@ -40,6 +40,10 @@ INSTALLED_APPS = [
     'rest_framework',
     'drone',
     'medication',
+    'django_crontab',
+]
+CRONJOBS = [
+    ('* * * * *', 'drone_assessment.cron.my_cron_job')
 ]
 
 MIDDLEWARE = [

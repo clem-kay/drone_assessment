@@ -7,6 +7,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 import re
+import decimal
 
 # Create your views here.
 @api_view(['GET'])
@@ -19,9 +20,9 @@ def get_meds(request):
 def load_med(request):
     try:
         drone = Drone.objects.get(serial_number=request.data['drone'])
-        if drone.state != 'IDLE':
-            return Response({'message':f"drone {drone.serial_number} cannot be loaded, find another drone in idle state "},status=status.HTTP_400_BAD_REQUEST)
-        elif drone.battery_capacity < 25:
+        if drone.state == 'DELIVERING' or drone.state =='LOADED' or drone.state =='DELIVERED' or drone.state =='RETURNING' :
+            return Response({'message':f"drone {drone.serial_number} cannot be loaded, find another drone in idle OR LOADING state "},status=status.HTTP_400_BAD_REQUEST)
+        if drone.battery_capacity < 25:
             return Response({'message':f"drone {drone.serial_number} battery is too low to load"},status=status.HTTP_400_BAD_REQUEST)
         elif not re.match('^[A-Z0-9_]*$',request.data['code']):
             return Response({'message':f"code for medication should be uppercase letters and underscore only"},status=status.HTTP_400_BAD_REQUEST)
@@ -33,7 +34,11 @@ def load_med(request):
             ser = MedicationSerializer(data=request.data)
             if ser.is_valid():
                 ser.save()
-                drone.state = 'LOADED'
+                drone.weight_limit = decimal.Decimal(drone.weight_limit) - decimal.Decimal(request.data['weight'])
+                if drone.weight_limit == 0:
+                    drone.state = 'LOADED'
+                else:
+                    drone.state = 'LOADING'
                 drone.save()
                 return Response({'med':ser.data},status=status.HTTP_201_CREATED)
     except Drone.DoesNotExist:
