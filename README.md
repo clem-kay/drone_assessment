@@ -37,3 +37,10 @@ python manage.py migrate
 
 4) Run the server
 python manage.py runserver
+
+5) run these commands to start the dependency on celery 
+celery -A drone_assessment beat -l INFO --scheduler django_celery_beat.schedulers:DatabaseScheduler
+
+celery -A scheduledjangotask worker -l debug
+
+6) start your redis server
